@@ -13,10 +13,10 @@ namespace DoctorManagement.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class DoctorDataEntities : DbContext
+    public partial class DoctorDataEntities2 : DbContext
     {
-        public DoctorDataEntities()
-            : base("name=DoctorDataEntities")
+        public DoctorDataEntities2()
+            : base("name=DoctorDataEntities2")
         {
         }
     
@@ -25,8 +25,10 @@ namespace DoctorManagement.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Disease> Disease { get; set; }
+        public virtual DbSet<BloodGroup> BloodGroup { get; set; }
+        public virtual DbSet<Doctor> Doctor { get; set; }
         public virtual DbSet<Enrollment> Enrollment { get; set; }
+        public virtual DbSet<Hospital> Hospital { get; set; }
         public virtual DbSet<Patient> Patient { get; set; }
     }
 }

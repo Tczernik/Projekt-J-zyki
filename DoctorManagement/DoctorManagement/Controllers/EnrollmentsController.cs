@@ -12,12 +12,12 @@ namespace DoctorManagement.Controllers
 {
     public class EnrollmentsController : Controller
     {
-        private DoctorDataEntities db = new DoctorDataEntities();
+        private DoctorDataEntities2 db = new DoctorDataEntities2();
 
         // GET: Enrollments
         public ActionResult Index()
         {
-            var enrollment = db.Enrollment.Include(e => e.Disease).Include(e => e.Patient);
+            var enrollment = db.Enrollment.Include(e => e.BloodGroup).Include(e => e.Patient);
             return View(enrollment.ToList());
         }
 
@@ -39,7 +39,7 @@ namespace DoctorManagement.Controllers
         // GET: Enrollments/Create
         public ActionResult Create()
         {
-            ViewBag.DiseaseID = new SelectList(db.Disease, "DiseaseID", "Title");
+            ViewBag.BloodGroupID = new SelectList(db.BloodGroup, "BloodGroupID", "NameGroup");
             ViewBag.PatientID = new SelectList(db.Patient, "PatientID", "LastName");
             return View();
         }
@@ -49,7 +49,7 @@ namespace DoctorManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EnrollmentID,Grade,DiseaseID,PatientID")] Enrollment enrollment)
+        public ActionResult Create([Bind(Include = "EnrollmentID,BloodGroupID,PatientID")] Enrollment enrollment)
         {
             if (ModelState.IsValid)
             {
@@ -58,7 +58,7 @@ namespace DoctorManagement.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.DiseaseID = new SelectList(db.Disease, "DiseaseID", "Title", enrollment.DiseaseID);
+            ViewBag.BloodGroupID = new SelectList(db.BloodGroup, "BloodGroupID", "NameGroup", enrollment.BloodGroupID);
             ViewBag.PatientID = new SelectList(db.Patient, "PatientID", "LastName", enrollment.PatientID);
             return View(enrollment);
         }
@@ -75,7 +75,7 @@ namespace DoctorManagement.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.DiseaseID = new SelectList(db.Disease, "DiseaseID", "Title", enrollment.DiseaseID);
+            ViewBag.BloodGroupID = new SelectList(db.BloodGroup, "BloodGroupID", "NameGroup", enrollment.BloodGroupID);
             ViewBag.PatientID = new SelectList(db.Patient, "PatientID", "LastName", enrollment.PatientID);
             return View(enrollment);
         }
@@ -85,7 +85,7 @@ namespace DoctorManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EnrollmentID,Grade,DiseaseID,PatientID")] Enrollment enrollment)
+        public ActionResult Edit([Bind(Include = "EnrollmentID,BloodGroupID,PatientID")] Enrollment enrollment)
         {
             if (ModelState.IsValid)
             {
@@ -93,7 +93,7 @@ namespace DoctorManagement.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.DiseaseID = new SelectList(db.Disease, "DiseaseID", "Title", enrollment.DiseaseID);
+            ViewBag.BloodGroupID = new SelectList(db.BloodGroup, "BloodGroupID", "NameGroup", enrollment.BloodGroupID);
             ViewBag.PatientID = new SelectList(db.Patient, "PatientID", "LastName", enrollment.PatientID);
             return View(enrollment);
         }

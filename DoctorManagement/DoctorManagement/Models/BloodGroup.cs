@@ -12,18 +12,19 @@ namespace DoctorManagement.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Disease
+    public partial class BloodGroup
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Disease()
+        public BloodGroup()
         {
             this.Enrollment = new HashSet<Enrollment>();
         }
     
-        public int DiseaseID { get; set; }
-        public string Title { get; set; }
-        public Nullable<int> Credits { get; set; }
+        public int BloodGroupID { get; set; }
+        public string NameGroup { get; set; }
+        public int HospitalID { get; set; }
     
+        public virtual Hospital Hospital { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Enrollment> Enrollment { get; set; }
     }

@@ -5,22 +5,38 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="DoctorDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Disease">
+        <EntityType Name="BloodGroup">
           <Key>
-            <PropertyRef Name="DiseaseID" />
+            <PropertyRef Name="BloodGroupID" />
           </Key>
-          <Property Name="DiseaseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Title" Type="nvarchar" MaxLength="50" />
-          <Property Name="Credits" Type="int" />
+          <Property Name="BloodGroupID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameGroup" Type="nvarchar" MaxLength="50" />
+          <Property Name="HospitalID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Doctor">
+          <Key>
+            <PropertyRef Name="DoctorID" />
+          </Key>
+          <Property Name="DoctorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Speciality" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Enrollment">
           <Key>
             <PropertyRef Name="EnrollmentID" />
           </Key>
           <Property Name="EnrollmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Grade" Type="decimal" Precision="3" Scale="2" />
-          <Property Name="DiseaseID" Type="int" Nullable="false" />
+          <Property Name="BloodGroupID" Type="int" Nullable="false" />
           <Property Name="PatientID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Hospital">
+          <Key>
+            <PropertyRef Name="HospitalID" />
+          </Key>
+          <Property Name="HospitalID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="DoctorID" Type="int" />
         </EntityType>
         <EntityType Name="Patient">
           <Key>
@@ -30,18 +46,34 @@
           <Property Name="LastName" Type="nvarchar" MaxLength="50" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
           <Property Name="EnrollmentDate" Type="datetime" />
+          <Property Name="SSN" Type="int" />
+          <Property Name="BloodGroup" Type="char" MaxLength="5" />
         </EntityType>
-        <Association Name="FK_dbo_Enrollment_dbo_Course_CourseID">
-          <End Role="Disease" Type="Self.Disease" Multiplicity="1">
+        <Association Name="FK_dbo_BloodGroup_dbo_Hospital_HospitalID">
+          <End Role="Hospital" Type="Self.Hospital" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="BloodGroup" Type="Self.BloodGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospital">
+              <PropertyRef Name="HospitalID" />
+            </Principal>
+            <Dependent Role="BloodGroup">
+              <PropertyRef Name="HospitalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Enrollment_dbo_BloodGroup_BloodGroupID">
+          <End Role="BloodGroup" Type="Self.BloodGroup" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
           <End Role="Enrollment" Type="Self.Enrollment" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Disease">
-              <PropertyRef Name="DiseaseID" />
+            <Principal Role="BloodGroup">
+              <PropertyRef Name="BloodGroupID" />
             </Principal>
             <Dependent Role="Enrollment">
-              <PropertyRef Name="DiseaseID" />
+              <PropertyRef Name="BloodGroupID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -59,17 +91,41 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_dbo_Hospital_dbo_Doctor_DoctorID">
+          <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Hospital" Type="Self.Hospital" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="DoctorID" />
+            </Principal>
+            <Dependent Role="Hospital">
+              <PropertyRef Name="DoctorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="DoctorDataModelStoreContainer">
-          <EntitySet Name="Disease" EntityType="Self.Disease" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BloodGroup" EntityType="Self.BloodGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Doctor" EntityType="Self.Doctor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Enrollment" EntityType="Self.Enrollment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Hospital" EntityType="Self.Hospital" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_dbo_Enrollment_dbo_Course_CourseID" Association="Self.FK_dbo_Enrollment_dbo_Course_CourseID">
-            <End Role="Disease" EntitySet="Disease" />
+          <AssociationSet Name="FK_dbo_BloodGroup_dbo_Hospital_HospitalID" Association="Self.FK_dbo_BloodGroup_dbo_Hospital_HospitalID">
+            <End Role="Hospital" EntitySet="Hospital" />
+            <End Role="BloodGroup" EntitySet="BloodGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Enrollment_dbo_BloodGroup_BloodGroupID" Association="Self.FK_dbo_Enrollment_dbo_BloodGroup_BloodGroupID">
+            <End Role="BloodGroup" EntitySet="BloodGroup" />
             <End Role="Enrollment" EntitySet="Enrollment" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Enrollment_dbo_Patient_PatientID" Association="Self.FK_dbo_Enrollment_dbo_Patient_PatientID">
             <End Role="Patient" EntitySet="Patient" />
             <End Role="Enrollment" EntitySet="Enrollment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Hospital_dbo_Doctor_DoctorID" Association="Self.FK_dbo_Hospital_dbo_Doctor_DoctorID">
+            <End Role="Doctor" EntitySet="Doctor" />
+            <End Role="Hospital" EntitySet="Hospital" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -77,25 +133,45 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DoctorDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Disease">
+        <EntityType Name="BloodGroup">
           <Key>
-            <PropertyRef Name="DiseaseID" />
+            <PropertyRef Name="BloodGroupID" />
           </Key>
-          <Property Name="DiseaseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Credits" Type="Int32" />
-          <NavigationProperty Name="Enrollment" Relationship="Self.FK_dbo_Enrollment_dbo_Course_CourseID" FromRole="Disease" ToRole="Enrollment" />
+          <Property Name="BloodGroupID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameGroup" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HospitalID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Hospital" Relationship="Self.FK_dbo_BloodGroup_dbo_Hospital_HospitalID" FromRole="BloodGroup" ToRole="Hospital" />
+          <NavigationProperty Name="Enrollment" Relationship="Self.FK_dbo_Enrollment_dbo_BloodGroup_BloodGroupID" FromRole="BloodGroup" ToRole="Enrollment" />
+        </EntityType>
+        <EntityType Name="Doctor">
+          <Key>
+            <PropertyRef Name="DoctorID" />
+          </Key>
+          <Property Name="DoctorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Speciality" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Hospital" Relationship="Self.FK_dbo_Hospital_dbo_Doctor_DoctorID" FromRole="Doctor" ToRole="Hospital" />
         </EntityType>
         <EntityType Name="Enrollment">
           <Key>
             <PropertyRef Name="EnrollmentID" />
           </Key>
           <Property Name="EnrollmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Grade" Type="Decimal" Precision="3" Scale="2" />
-          <Property Name="DiseaseID" Type="Int32" Nullable="false" />
+          <Property Name="BloodGroupID" Type="Int32" Nullable="false" />
           <Property Name="PatientID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Disease" Relationship="Self.FK_dbo_Enrollment_dbo_Course_CourseID" FromRole="Enrollment" ToRole="Disease" />
+          <NavigationProperty Name="BloodGroup" Relationship="Self.FK_dbo_Enrollment_dbo_BloodGroup_BloodGroupID" FromRole="Enrollment" ToRole="BloodGroup" />
           <NavigationProperty Name="Patient" Relationship="Self.FK_dbo_Enrollment_dbo_Patient_PatientID" FromRole="Enrollment" ToRole="Patient" />
+        </EntityType>
+        <EntityType Name="Hospital">
+          <Key>
+            <PropertyRef Name="HospitalID" />
+          </Key>
+          <Property Name="HospitalID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DoctorID" Type="Int32" />
+          <NavigationProperty Name="BloodGroup" Relationship="Self.FK_dbo_BloodGroup_dbo_Hospital_HospitalID" FromRole="Hospital" ToRole="BloodGroup" />
+          <NavigationProperty Name="Doctor" Relationship="Self.FK_dbo_Hospital_dbo_Doctor_DoctorID" FromRole="Hospital" ToRole="Doctor" />
         </EntityType>
         <EntityType Name="Patient">
           <Key>
@@ -105,19 +181,49 @@
           <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="EnrollmentDate" Type="DateTime" Precision="3" />
+          <Property Name="SSN" Type="Int32" />
+          <Property Name="BloodGroup" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="Enrollment" Relationship="Self.FK_dbo_Enrollment_dbo_Patient_PatientID" FromRole="Patient" ToRole="Enrollment" />
         </EntityType>
-        <Association Name="FK_dbo_Enrollment_dbo_Course_CourseID">
-          <End Role="Disease" Type="Self.Disease" Multiplicity="1">
+        <Association Name="FK_dbo_BloodGroup_dbo_Hospital_HospitalID">
+          <End Role="Hospital" Type="Self.Hospital" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="BloodGroup" Type="Self.BloodGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospital">
+              <PropertyRef Name="HospitalID" />
+            </Principal>
+            <Dependent Role="BloodGroup">
+              <PropertyRef Name="HospitalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Enrollment_dbo_BloodGroup_BloodGroupID">
+          <End Role="BloodGroup" Type="Self.BloodGroup" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
           <End Role="Enrollment" Type="Self.Enrollment" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Disease">
-              <PropertyRef Name="DiseaseID" />
+            <Principal Role="BloodGroup">
+              <PropertyRef Name="BloodGroupID" />
             </Principal>
             <Dependent Role="Enrollment">
-              <PropertyRef Name="DiseaseID" />
+              <PropertyRef Name="BloodGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Hospital_dbo_Doctor_DoctorID">
+          <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Hospital" Type="Self.Hospital" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="DoctorID" />
+            </Principal>
+            <Dependent Role="Hospital">
+              <PropertyRef Name="DoctorID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -135,13 +241,23 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="DoctorDataEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Disease" EntityType="Self.Disease" />
+        <EntityContainer Name="DoctorDataEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BloodGroup" EntityType="Self.BloodGroup" />
+          <EntitySet Name="Doctor" EntityType="Self.Doctor" />
           <EntitySet Name="Enrollment" EntityType="Self.Enrollment" />
+          <EntitySet Name="Hospital" EntityType="Self.Hospital" />
           <EntitySet Name="Patient" EntityType="Self.Patient" />
-          <AssociationSet Name="FK_dbo_Enrollment_dbo_Course_CourseID" Association="Self.FK_dbo_Enrollment_dbo_Course_CourseID">
-            <End Role="Disease" EntitySet="Disease" />
+          <AssociationSet Name="FK_dbo_BloodGroup_dbo_Hospital_HospitalID" Association="Self.FK_dbo_BloodGroup_dbo_Hospital_HospitalID">
+            <End Role="Hospital" EntitySet="Hospital" />
+            <End Role="BloodGroup" EntitySet="BloodGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Enrollment_dbo_BloodGroup_BloodGroupID" Association="Self.FK_dbo_Enrollment_dbo_BloodGroup_BloodGroupID">
+            <End Role="BloodGroup" EntitySet="BloodGroup" />
             <End Role="Enrollment" EntitySet="Enrollment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Hospital_dbo_Doctor_DoctorID" Association="Self.FK_dbo_Hospital_dbo_Doctor_DoctorID">
+            <End Role="Doctor" EntitySet="Doctor" />
+            <End Role="Hospital" EntitySet="Hospital" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Enrollment_dbo_Patient_PatientID" Association="Self.FK_dbo_Enrollment_dbo_Patient_PatientID">
             <End Role="Patient" EntitySet="Patient" />
@@ -153,13 +269,23 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DoctorDataModelStoreContainer" CdmEntityContainer="DoctorDataEntities">
-          <EntitySetMapping Name="Disease">
-            <EntityTypeMapping TypeName="DoctorDataModel.Disease">
-              <MappingFragment StoreEntitySet="Disease">
-                <ScalarProperty Name="DiseaseID" ColumnName="DiseaseID" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="Credits" ColumnName="Credits" />
+        <EntityContainerMapping StorageEntityContainer="DoctorDataModelStoreContainer" CdmEntityContainer="DoctorDataEntities2">
+          <EntitySetMapping Name="BloodGroup">
+            <EntityTypeMapping TypeName="DoctorDataModel.BloodGroup">
+              <MappingFragment StoreEntitySet="BloodGroup">
+                <ScalarProperty Name="BloodGroupID" ColumnName="BloodGroupID" />
+                <ScalarProperty Name="NameGroup" ColumnName="NameGroup" />
+                <ScalarProperty Name="HospitalID" ColumnName="HospitalID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Doctor">
+            <EntityTypeMapping TypeName="DoctorDataModel.Doctor">
+              <MappingFragment StoreEntitySet="Doctor">
+                <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Speciality" ColumnName="Speciality" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -167,9 +293,17 @@
             <EntityTypeMapping TypeName="DoctorDataModel.Enrollment">
               <MappingFragment StoreEntitySet="Enrollment">
                 <ScalarProperty Name="EnrollmentID" ColumnName="EnrollmentID" />
-                <ScalarProperty Name="Grade" ColumnName="Grade" />
-                <ScalarProperty Name="DiseaseID" ColumnName="DiseaseID" />
+                <ScalarProperty Name="BloodGroupID" ColumnName="BloodGroupID" />
                 <ScalarProperty Name="PatientID" ColumnName="PatientID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hospital">
+            <EntityTypeMapping TypeName="DoctorDataModel.Hospital">
+              <MappingFragment StoreEntitySet="Hospital">
+                <ScalarProperty Name="HospitalID" ColumnName="HospitalID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DoctorID" ColumnName="DoctorID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -180,6 +314,8 @@
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="EnrollmentDate" ColumnName="EnrollmentDate" />
+                <ScalarProperty Name="SSN" ColumnName="SSN" />
+                <ScalarProperty Name="BloodGroup" ColumnName="BloodGroup" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

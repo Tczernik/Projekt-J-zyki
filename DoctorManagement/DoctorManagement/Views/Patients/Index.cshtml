@@ -20,6 +20,12 @@
         <th>
             @Html.DisplayNameFor(model => model.EnrollmentDate)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SSN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BloodGroup)
+        </th>
         <th></th>
     </tr>
 
@@ -33,6 +39,12 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.EnrollmentDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SSN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BloodGroup)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.PatientID }) |

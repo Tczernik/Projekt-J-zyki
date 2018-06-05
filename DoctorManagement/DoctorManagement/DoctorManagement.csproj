@@ -156,13 +156,17 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\DoctorsController.cs" />
     <Compile Include="Controllers\EnrollmentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PatientsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Disease.cs">
+    <Compile Include="Models\BloodGroup.cs">
+      <DependentUpon>DoctorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Doctor.cs">
       <DependentUpon>DoctorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DoctorModel.Context.cs">
@@ -183,6 +187,9 @@
     <Compile Include="Models\Enrollment.cs">
       <DependentUpon>DoctorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Hospital.cs">
+      <DependentUpon>DoctorModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Patient.cs">
       <DependentUpon>DoctorModel.tt</DependentUpon>
     </Compile>
@@ -199,8 +206,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Models\DoctorModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DoctorModel.Context.cs</LastGenOutput>
       <DependentUpon>DoctorModel.edmx</DependentUpon>
+      <LastGenOutput>DoctorModel.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\DoctorModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -254,11 +261,11 @@
     <Content Include="Views\Enrollments\Details.cshtml" />
     <Content Include="Views\Enrollments\Edit.cshtml" />
     <Content Include="Views\Enrollments\Index.cshtml" />
-    <Content Include="Views\Diseases\Create.cshtml" />
-    <Content Include="Views\Diseases\Delete.cshtml" />
-    <Content Include="Views\Diseases\Details.cshtml" />
-    <Content Include="Views\Diseases\Edit.cshtml" />
-    <Content Include="Views\Diseases\Index.cshtml" />
+    <Content Include="Views\Doctors\Create.cshtml" />
+    <Content Include="Views\Doctors\Delete.cshtml" />
+    <Content Include="Views\Doctors\Details.cshtml" />
+    <Content Include="Views\Doctors\Edit.cshtml" />
+    <Content Include="Views\Doctors\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
