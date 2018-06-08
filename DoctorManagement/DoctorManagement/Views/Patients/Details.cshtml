@@ -65,6 +65,25 @@
         <dd>
             @Html.DisplayFor(model => model.Hospital.HospitalName)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Enrollment)
+        </dt>
+        <dd>
+            <table class=" table">
+                <tr>
+                    <th>ID_Badania</th> <th> ID_Patient</th> <th>Grade</th> 
+                </tr>
+                @foreach (var item in Model.Enrollment)
+                {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.ID_Badania)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ID_Patient)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Grade)</td>
+                </tr>
+                }
+            </table>
+                   
+        </dd>
 
     </dl>
 </div>
