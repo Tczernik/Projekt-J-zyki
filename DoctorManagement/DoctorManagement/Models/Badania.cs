@@ -12,29 +12,19 @@ namespace DoctorManagement.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Patient
+    public partial class Badania
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Patient()
+        public Badania()
         {
-            this.Badania = new HashSet<Badania>();
             this.Enrollment = new HashSet<Enrollment>();
         }
     
-        public int ID { get; set; }
-        public string PatientName { get; set; }
-        public string PatientSurname { get; set; }
-        public string SSN { get; set; }
-        public System.DateTime Date { get; set; }
-        public Nullable<int> ID_Doctor { get; set; }
-        public Nullable<int> ID_Blood { get; set; }
-        public Nullable<int> ID_Hospital { get; set; }
+        public int Id { get; set; }
+        public string Badania1 { get; set; }
+        public Nullable<int> ID_Patient { get; set; }
     
-        public virtual Doctor Doctor { get; set; }
-        public virtual BloodGroup BloodGroup { get; set; }
-        public virtual Hospital Hospital { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Badania> Badania { get; set; }
+        public virtual Patient Patient { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Enrollment> Enrollment { get; set; }
     }

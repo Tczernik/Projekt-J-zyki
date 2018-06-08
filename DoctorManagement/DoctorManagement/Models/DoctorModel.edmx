@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="DoctorDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Badania">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Badania" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ID_Patient" Type="int" />
+        </EntityType>
         <EntityType Name="BloodGroup">
           <Key>
             <PropertyRef Name="ID" />
@@ -21,6 +29,15 @@
           <Property Name="DoctorName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Speciality" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="ID_Hospital" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Enrollment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Badania" Type="int" />
+          <Property Name="ID_Patient" Type="int" />
+          <Property Name="Grade" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Hospital">
           <Key>
@@ -45,6 +62,20 @@
           <Property Name="ID_Blood" Type="int" />
           <Property Name="ID_Hospital" Type="int" />
         </EntityType>
+        <Association Name="FK__Badania__ID_Pati__6FE99F9F">
+          <End Role="Patient" Type="Self.Patient" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Badania" Type="Self.Badania" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Badania">
+              <PropertyRef Name="ID_Patient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__BloodGrou__ID_Ho__3A81B327">
           <End Role="Hospital" Type="Self.Hospital" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -70,6 +101,32 @@
             </Principal>
             <Dependent Role="Doctor">
               <PropertyRef Name="ID_Hospital" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Enrollmen__ID_Ba__75A278F5">
+          <End Role="Badania" Type="Self.Badania" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Enrollment" Type="Self.Enrollment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Badania">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Enrollment">
+              <PropertyRef Name="ID_Badania" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Enrollmen__ID_Pa__787EE5A0">
+          <End Role="Patient" Type="Self.Patient" Multiplicity="0..1" />
+          <End Role="Enrollment" Type="Self.Enrollment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Enrollment">
+              <PropertyRef Name="ID_Patient" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -112,10 +169,16 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="DoctorDatabaseModelStoreContainer">
+          <EntitySet Name="Badania" EntityType="Self.Badania" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BloodGroup" EntityType="Self.BloodGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Doctor" EntityType="Self.Doctor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Enrollment" EntityType="Self.Enrollment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Hospital" EntityType="Self.Hospital" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Badania__ID_Pati__6FE99F9F" Association="Self.FK__Badania__ID_Pati__6FE99F9F">
+            <End Role="Patient" EntitySet="Patient" />
+            <End Role="Badania" EntitySet="Badania" />
+          </AssociationSet>
           <AssociationSet Name="FK__BloodGrou__ID_Ho__3A81B327" Association="Self.FK__BloodGrou__ID_Ho__3A81B327">
             <End Role="Hospital" EntitySet="Hospital" />
             <End Role="BloodGroup" EntitySet="BloodGroup" />
@@ -123,6 +186,14 @@
           <AssociationSet Name="FK__Doctor__ID_Hospi__36B12243" Association="Self.FK__Doctor__ID_Hospi__36B12243">
             <End Role="Hospital" EntitySet="Hospital" />
             <End Role="Doctor" EntitySet="Doctor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Enrollmen__ID_Ba__75A278F5" Association="Self.FK__Enrollmen__ID_Ba__75A278F5">
+            <End Role="Badania" EntitySet="Badania" />
+            <End Role="Enrollment" EntitySet="Enrollment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Enrollmen__ID_Pa__787EE5A0" Association="Self.FK__Enrollmen__ID_Pa__787EE5A0">
+            <End Role="Patient" EntitySet="Patient" />
+            <End Role="Enrollment" EntitySet="Enrollment" />
           </AssociationSet>
           <AssociationSet Name="FK__Patient__ID_Bloo__5FB337D6" Association="Self.FK__Patient__ID_Bloo__5FB337D6">
             <End Role="BloodGroup" EntitySet="BloodGroup" />
@@ -190,6 +261,8 @@
           <NavigationProperty Name="Doctor" Relationship="Self.FK__Patient__ID_Doct__37A5467C" FromRole="Patient" ToRole="Doctor" />
           <NavigationProperty Name="BloodGroup" Relationship="DoctorDatabaseModel.FK__Patient__ID_Bloo__5FB337D6" FromRole="Patient" ToRole="BloodGroup" />
           <NavigationProperty Name="Hospital" Relationship="DoctorDatabaseModel.FK__Patient__ID_Hosp__60A75C0F" FromRole="Patient" ToRole="Hospital" />
+          <NavigationProperty Name="Badania" Relationship="DoctorDatabaseModel.FK__Badania__ID_Pati__6FE99F9F" FromRole="Patient" ToRole="Badania" />
+          <NavigationProperty Name="Enrollment" Relationship="DoctorDatabaseModel.FK__Enrollmen__ID_Pa__76969D2E" FromRole="Patient" ToRole="Enrollment" />
         </EntityType>
         <Association Name="FK__BloodGrou__ID_Ho__3A81B327">
           <End Role="Hospital" Type="Self.Hospital" Multiplicity="1">
@@ -258,6 +331,24 @@
             <End Role="Hospital" EntitySet="Hospital" />
             <End Role="Patient" EntitySet="Patient" />
           </AssociationSet>
+          <EntitySet Name="Badania" EntityType="DoctorDatabaseModel.Badania" />
+          <AssociationSet Name="FK__Badania__ID_Pati__6FE99F9F" Association="DoctorDatabaseModel.FK__Badania__ID_Pati__6FE99F9F">
+            <End Role="Patient" EntitySet="Patient" />
+            <End Role="Badania" EntitySet="Badania" />
+          </AssociationSet>
+          <EntitySet Name="Enrollment" EntityType="DoctorDatabaseModel.Enrollment" />
+          <AssociationSet Name="FK__Enrollmen__ID_Pa__76969D2E" Association="DoctorDatabaseModel.FK__Enrollmen__ID_Pa__76969D2E">
+            <End Role="Patient" EntitySet="Patient" />
+            <End Role="Enrollment" EntitySet="Enrollment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Enrollmen__ID_Pa__778AC167" Association="DoctorDatabaseModel.FK__Enrollmen__ID_Pa__778AC167">
+            <End Role="Badania" EntitySet="Badania" />
+            <End Role="Enrollment" EntitySet="Enrollment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Enrollmen__ID_Ba__75A278F5" Association="DoctorDatabaseModel.FK__Enrollmen__ID_Ba__75A278F5">
+            <End Role="Badania" EntitySet="Badania" />
+            <End Role="Enrollment" EntitySet="Enrollment" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK__Patient__ID_Bloo__5FB337D6">
           <End Type="DoctorDatabaseModel.BloodGroup" Role="BloodGroup" Multiplicity="0..1" />
@@ -280,6 +371,79 @@
             </Principal>
             <Dependent Role="Patient">
               <PropertyRef Name="ID_Hospital" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Badania">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Badania1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ID_Patient" Type="Int32" />
+          <NavigationProperty Name="Patient" Relationship="DoctorDatabaseModel.FK__Badania__ID_Pati__6FE99F9F" FromRole="Badania" ToRole="Patient" />
+          <NavigationProperty Name="Enrollment" Relationship="DoctorDatabaseModel.FK__Enrollmen__ID_Ba__75A278F5" FromRole="Badania" ToRole="Enrollment" />
+        </EntityType>
+        <Association Name="FK__Badania__ID_Pati__6FE99F9F">
+          <End Type="DoctorDatabaseModel.Patient" Role="Patient" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DoctorDatabaseModel.Badania" Role="Badania" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Badania">
+              <PropertyRef Name="ID_Patient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Enrollment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Badania" Type="Int32" />
+          <Property Name="ID_Patient" Type="Int32" />
+          <Property Name="Grade" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Patient" Relationship="DoctorDatabaseModel.FK__Enrollmen__ID_Pa__76969D2E" FromRole="Enrollment" ToRole="Patient" />
+          <NavigationProperty Name="Badania" Relationship="DoctorDatabaseModel.FK__Enrollmen__ID_Ba__75A278F5" FromRole="Enrollment" ToRole="Badania" />
+        </EntityType>
+        <Association Name="FK__Enrollmen__ID_Pa__76969D2E">
+          <End Type="DoctorDatabaseModel.Patient" Role="Patient" Multiplicity="0..1" />
+          <End Type="DoctorDatabaseModel.Enrollment" Role="Enrollment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Enrollment">
+              <PropertyRef Name="ID_Patient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Enrollmen__ID_Pa__778AC167">
+          <End Type="DoctorDatabaseModel.Badania" Role="Badania" Multiplicity="0..1" />
+          <End Type="DoctorDatabaseModel.Enrollment" Role="Enrollment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Badania">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Enrollment">
+              <PropertyRef Name="ID_Patient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Enrollmen__ID_Ba__75A278F5">
+          <End Type="DoctorDatabaseModel.Badania" Role="Badania" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DoctorDatabaseModel.Enrollment" Role="Enrollment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Badania">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Enrollment">
+              <PropertyRef Name="ID_Badania" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -330,6 +494,25 @@
                 <ScalarProperty Name="ID_Doctor" ColumnName="ID_Doctor" />
                 <ScalarProperty Name="ID_Blood" ColumnName="ID_Blood" />
                 <ScalarProperty Name="ID_Hospital" ColumnName="ID_Hospital" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Badania">
+            <EntityTypeMapping TypeName="DoctorDatabaseModel.Badania">
+              <MappingFragment StoreEntitySet="Badania">
+                <ScalarProperty Name="ID_Patient" ColumnName="ID_Patient" />
+                <ScalarProperty Name="Badania1" ColumnName="Badania" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Enrollment">
+            <EntityTypeMapping TypeName="DoctorDatabaseModel.Enrollment">
+              <MappingFragment StoreEntitySet="Enrollment">
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="ID_Patient" ColumnName="ID_Patient" />
+                <ScalarProperty Name="ID_Badania" ColumnName="ID_Badania" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

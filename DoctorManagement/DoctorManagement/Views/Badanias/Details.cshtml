@@ -1,0 +1,34 @@
+﻿@model DoctorManagement.Models.Badania
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Badania</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Badania1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Badania1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Patient.PatientName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Patient.PatientName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
