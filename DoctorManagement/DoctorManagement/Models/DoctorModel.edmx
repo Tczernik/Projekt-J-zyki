@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DoctorDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DoctorDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BloodGroup">
           <Key>
             <PropertyRef Name="ID" />
@@ -41,7 +41,6 @@
           <Property Name="PatientSurname" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="SSN" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Date" Type="datetime" Nullable="false" />
-          <Property Name="BloodGroup" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="ID_Doctor" Type="int" />
           <Property Name="ID_Blood" Type="int" />
           <Property Name="ID_Hospital" Type="int" />
@@ -106,8 +105,7 @@
             <End Role="Patient" EntitySet="Patient" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DoctorDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -152,7 +150,6 @@
           <Property Name="PatientSurname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="SSN" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="BloodGroup" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ID_Doctor" Type="Int32" />
           <Property Name="ID_Blood" Type="Int32" />
           <Property Name="ID_Hospital" Type="Int32" />
@@ -262,7 +259,6 @@
                 <ScalarProperty Name="PatientSurname" ColumnName="PatientSurname" />
                 <ScalarProperty Name="SSN" ColumnName="SSN" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="BloodGroup" ColumnName="BloodGroup" />
                 <ScalarProperty Name="ID_Doctor" ColumnName="ID_Doctor" />
                 <ScalarProperty Name="ID_Blood" ColumnName="ID_Blood" />
                 <ScalarProperty Name="ID_Hospital" ColumnName="ID_Hospital" />

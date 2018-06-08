@@ -19,7 +19,6 @@ namespace DoctorManagement.Models
         public string PatientSurname { get; set; }
         public string SSN { get; set; }
         public System.DateTime Date { get; set; }
-        public string BloodGroup { get; set; }
         public Nullable<int> ID_Doctor { get; set; }
         public Nullable<int> ID_Blood { get; set; }
         public Nullable<int> ID_Hospital { get; set; }

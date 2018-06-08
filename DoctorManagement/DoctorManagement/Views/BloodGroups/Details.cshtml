@@ -1,0 +1,34 @@
+﻿@model DoctorManagement.Models.BloodGroup
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>BloodGroup</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BloodName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BloodName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Hospital.HospitalName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Hospital.HospitalName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
