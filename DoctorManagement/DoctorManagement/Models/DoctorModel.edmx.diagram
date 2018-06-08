@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0fe4436d49d54ba4b83c08804e12f6b4" Name="Diagram1">
+        <EntityTypeShape EntityType="DoctorDatabaseModel.BloodGroup" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoctorDatabaseModel.Doctor" Width="1.5" PointX="3.375" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoctorDatabaseModel.Hospital" Width="1.5" PointX="0.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoctorDatabaseModel.Patient" Width="1.5" PointX="5.875" PointY="3.625" IsExpanded="true" />
+        <AssociationConnector Association="DoctorDatabaseModel.FK__BloodGrou__ID_Ho__3A81B327" ManuallyRouted="false" />
+        <AssociationConnector Association="DoctorDatabaseModel.FK__Doctor__ID_Hospi__36B12243" ManuallyRouted="false" />
+        <AssociationConnector Association="DoctorDatabaseModel.FK__Patient__ID_Doct__37A5467C" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
