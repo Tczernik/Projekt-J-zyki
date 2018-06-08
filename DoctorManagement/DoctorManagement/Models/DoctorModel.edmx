@@ -73,6 +73,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Patient__ID_Bloo__5FB337D6">
+          <End Role="BloodGroup" Type="Self.BloodGroup" Multiplicity="0..1" />
+          <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BloodGroup">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Patient">
+              <PropertyRef Name="ID_Blood" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Patient__ID_Doct__37A5467C">
           <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -84,6 +96,18 @@
             </Principal>
             <Dependent Role="Patient">
               <PropertyRef Name="ID_Doctor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Patient__ID_Hosp__60A75C0F">
+          <End Role="Hospital" Type="Self.Hospital" Multiplicity="0..1" />
+          <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospital">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Patient">
+              <PropertyRef Name="ID_Hospital" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -100,8 +124,16 @@
             <End Role="Hospital" EntitySet="Hospital" />
             <End Role="Doctor" EntitySet="Doctor" />
           </AssociationSet>
+          <AssociationSet Name="FK__Patient__ID_Bloo__5FB337D6" Association="Self.FK__Patient__ID_Bloo__5FB337D6">
+            <End Role="BloodGroup" EntitySet="BloodGroup" />
+            <End Role="Patient" EntitySet="Patient" />
+          </AssociationSet>
           <AssociationSet Name="FK__Patient__ID_Doct__37A5467C" Association="Self.FK__Patient__ID_Doct__37A5467C">
             <End Role="Doctor" EntitySet="Doctor" />
+            <End Role="Patient" EntitySet="Patient" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Patient__ID_Hosp__60A75C0F" Association="Self.FK__Patient__ID_Hosp__60A75C0F">
+            <End Role="Hospital" EntitySet="Hospital" />
             <End Role="Patient" EntitySet="Patient" />
           </AssociationSet>
         </EntityContainer>
@@ -117,6 +149,7 @@
           <Property Name="BloodName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ID_Hospital" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Hospital" Relationship="Self.FK__BloodGrou__ID_Ho__3A81B327" FromRole="BloodGroup" ToRole="Hospital" />
+          <NavigationProperty Name="Patient" Relationship="DoctorDatabaseModel.FK__Patient__ID_Bloo__5FB337D6" FromRole="BloodGroup" ToRole="Patient" />
         </EntityType>
         <EntityType Name="Doctor">
           <Key>
@@ -140,6 +173,7 @@
           <Property Name="Nation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="BloodGroup" Relationship="Self.FK__BloodGrou__ID_Ho__3A81B327" FromRole="Hospital" ToRole="BloodGroup" />
           <NavigationProperty Name="Doctor" Relationship="Self.FK__Doctor__ID_Hospi__36B12243" FromRole="Hospital" ToRole="Doctor" />
+          <NavigationProperty Name="Patient" Relationship="DoctorDatabaseModel.FK__Patient__ID_Hosp__60A75C0F" FromRole="Hospital" ToRole="Patient" />
         </EntityType>
         <EntityType Name="Patient">
           <Key>
@@ -154,6 +188,8 @@
           <Property Name="ID_Blood" Type="Int32" />
           <Property Name="ID_Hospital" Type="Int32" />
           <NavigationProperty Name="Doctor" Relationship="Self.FK__Patient__ID_Doct__37A5467C" FromRole="Patient" ToRole="Doctor" />
+          <NavigationProperty Name="BloodGroup" Relationship="DoctorDatabaseModel.FK__Patient__ID_Bloo__5FB337D6" FromRole="Patient" ToRole="BloodGroup" />
+          <NavigationProperty Name="Hospital" Relationship="DoctorDatabaseModel.FK__Patient__ID_Hosp__60A75C0F" FromRole="Patient" ToRole="Hospital" />
         </EntityType>
         <Association Name="FK__BloodGrou__ID_Ho__3A81B327">
           <End Role="Hospital" Type="Self.Hospital" Multiplicity="1">
@@ -214,7 +250,39 @@
             <End Role="Doctor" EntitySet="Doctor" />
             <End Role="Patient" EntitySet="Patient" />
           </AssociationSet>
+          <AssociationSet Name="FK__Patient__ID_Bloo__5FB337D6" Association="DoctorDatabaseModel.FK__Patient__ID_Bloo__5FB337D6">
+            <End Role="BloodGroup" EntitySet="BloodGroup" />
+            <End Role="Patient" EntitySet="Patient" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Patient__ID_Hosp__60A75C0F" Association="DoctorDatabaseModel.FK__Patient__ID_Hosp__60A75C0F">
+            <End Role="Hospital" EntitySet="Hospital" />
+            <End Role="Patient" EntitySet="Patient" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK__Patient__ID_Bloo__5FB337D6">
+          <End Type="DoctorDatabaseModel.BloodGroup" Role="BloodGroup" Multiplicity="0..1" />
+          <End Type="DoctorDatabaseModel.Patient" Role="Patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BloodGroup">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Patient">
+              <PropertyRef Name="ID_Blood" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Patient__ID_Hosp__60A75C0F">
+          <End Type="DoctorDatabaseModel.Hospital" Role="Hospital" Multiplicity="0..1" />
+          <End Type="DoctorDatabaseModel.Patient" Role="Patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospital">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Patient">
+              <PropertyRef Name="ID_Hospital" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

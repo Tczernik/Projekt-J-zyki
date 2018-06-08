@@ -17,7 +17,7 @@ namespace DoctorManagement.Controllers
         // GET: Patients
         public ActionResult Index()
         {
-            var patient = db.Patient.Include(p => p.Doctor);
+            var patient = db.Patient.Include(p => p.Doctor).Include(p => p.BloodGroup).Include(p => p.Hospital);
             return View(patient.ToList());
         }
 
@@ -40,6 +40,8 @@ namespace DoctorManagement.Controllers
         public ActionResult Create()
         {
             ViewBag.ID_Doctor = new SelectList(db.Doctor, "ID", "DoctorName");
+            ViewBag.ID_Blood = new SelectList(db.BloodGroup, "ID", "BloodName");
+            ViewBag.ID_Hospital = new SelectList(db.Hospital, "ID", "HospitalName");
             return View();
         }
 
@@ -58,6 +60,8 @@ namespace DoctorManagement.Controllers
             }
 
             ViewBag.ID_Doctor = new SelectList(db.Doctor, "ID", "DoctorName", patient.ID_Doctor);
+            ViewBag.ID_Blood = new SelectList(db.BloodGroup, "ID", "BloodName", patient.ID_Blood);
+            ViewBag.ID_Hospital = new SelectList(db.Hospital, "ID", "HospitalName", patient.ID_Hospital);
             return View(patient);
         }
 
@@ -74,6 +78,8 @@ namespace DoctorManagement.Controllers
                 return HttpNotFound();
             }
             ViewBag.ID_Doctor = new SelectList(db.Doctor, "ID", "DoctorName", patient.ID_Doctor);
+            ViewBag.ID_Blood = new SelectList(db.BloodGroup, "ID", "BloodName", patient.ID_Blood);
+            ViewBag.ID_Hospital = new SelectList(db.Hospital, "ID", "HospitalName", patient.ID_Hospital);
             return View(patient);
         }
 
@@ -91,6 +97,8 @@ namespace DoctorManagement.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.ID_Doctor = new SelectList(db.Doctor, "ID", "DoctorName", patient.ID_Doctor);
+            ViewBag.ID_Blood = new SelectList(db.BloodGroup, "ID", "BloodName", patient.ID_Blood);
+            ViewBag.ID_Hospital = new SelectList(db.Hospital, "ID", "HospitalName", patient.ID_Hospital);
             return View(patient);
         }
 

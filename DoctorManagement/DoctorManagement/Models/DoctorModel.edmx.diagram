@@ -12,6 +12,8 @@
         <AssociationConnector Association="DoctorDatabaseModel.FK__BloodGrou__ID_Ho__3A81B327" ManuallyRouted="false" />
         <AssociationConnector Association="DoctorDatabaseModel.FK__Doctor__ID_Hospi__36B12243" ManuallyRouted="false" />
         <AssociationConnector Association="DoctorDatabaseModel.FK__Patient__ID_Doct__37A5467C" ManuallyRouted="false" />
+        <AssociationConnector Association="DoctorDatabaseModel.FK__Patient__ID_Bloo__5FB337D6" />
+        <AssociationConnector Association="DoctorDatabaseModel.FK__Patient__ID_Hosp__60A75C0F" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -24,5 +24,7 @@ namespace DoctorManagement.Models
         public Nullable<int> ID_Hospital { get; set; }
     
         public virtual Doctor Doctor { get; set; }
+        public virtual BloodGroup BloodGroup { get; set; }
+        public virtual Hospital Hospital { get; set; }
     }
 }

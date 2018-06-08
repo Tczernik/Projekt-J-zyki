@@ -14,10 +14,18 @@ namespace DoctorManagement.Models
     
     public partial class BloodGroup
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public BloodGroup()
+        {
+            this.Patient = new HashSet<Patient>();
+        }
+    
         public int ID { get; set; }
         public string BloodName { get; set; }
         public int ID_Hospital { get; set; }
     
         public virtual Hospital Hospital { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Patient> Patient { get; set; }
     }
 }
