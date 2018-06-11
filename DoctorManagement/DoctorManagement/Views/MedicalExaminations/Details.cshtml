@@ -11,19 +11,38 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.Examinations)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Examinations)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Patient.PatientName)
-        </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.Patient.PatientName)
+            <table class=" table">
+                <tr>
+                    
+                    <th> Id_Patient</th>
+                    <th>Grade</th>
+
+                </tr>
+                @foreach (var item in Model.Enrollment)
+                {
+                    <tr>
+                        
+                        <td>@Html.DisplayFor(modelItem => item.ID_Patient)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Grade)</td>
+                    </tr>
+                }
+
+            </table>
+
         </dd>
 
     </dl>
