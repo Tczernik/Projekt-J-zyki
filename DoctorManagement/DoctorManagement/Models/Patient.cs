@@ -17,8 +17,8 @@ namespace DoctorManagement.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Patient()
         {
-            this.Badania = new HashSet<Badania>();
             this.Enrollment = new HashSet<Enrollment>();
+            this.MedicalExaminations = new HashSet<MedicalExaminations>();
         }
     
         public int ID { get; set; }
@@ -34,8 +34,8 @@ namespace DoctorManagement.Models
         public virtual BloodGroup BloodGroup { get; set; }
         public virtual Hospital Hospital { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Badania> Badania { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Enrollment> Enrollment { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MedicalExaminations> MedicalExaminations { get; set; }
     }
 }

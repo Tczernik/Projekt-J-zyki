@@ -33,6 +33,27 @@
         <dd>
             @Html.DisplayFor(model => model.Hospital.HospitalName)
         </dd>
+        <dd>
+            <table class=" table">
+                <tr>
+                    <th>ID</th>
+                    <th> PatientName</th>
+                    <th>PatientSurname</th>
+                    
+                </tr>
+                @foreach (var item in Model.Patient)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.ID)</td>
+                        <td>@Html.DisplayFor(modelItem => item.PatientName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.PatientSurname)</td>
+                    </tr>
+                }
+               
+            </table>
+
+        </dd>
+
 
     </dl>
 </div>

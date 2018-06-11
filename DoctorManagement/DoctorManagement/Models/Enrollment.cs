@@ -15,11 +15,11 @@ namespace DoctorManagement.Models
     public partial class Enrollment
     {
         public int Id { get; set; }
-        public Nullable<int> ID_Badania { get; set; }
         public Nullable<int> ID_Patient { get; set; }
         public string Grade { get; set; }
+        public Nullable<int> ID_MedicalExaminations { get; set; }
     
         public virtual Patient Patient { get; set; }
-        public virtual Badania Badania { get; set; }
+        public virtual MedicalExaminations MedicalExaminations { get; set; }
     }
 }

@@ -156,18 +156,15 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\BadaniasController.cs" />
     <Compile Include="Controllers\BloodGroupsController.cs" />
     <Compile Include="Controllers\DoctorsController.cs" />
     <Compile Include="Controllers\EnrollmentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HospitalsController.cs" />
+    <Compile Include="Controllers\MedicalExaminationsController.cs" />
     <Compile Include="Controllers\PatientsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Badania.cs">
-      <DependentUpon>DoctorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\BloodGroup.cs">
       <DependentUpon>DoctorModel.tt</DependentUpon>
@@ -194,6 +191,9 @@
       <DependentUpon>DoctorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Hospital.cs">
+      <DependentUpon>DoctorModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MedicalExaminations.cs">
       <DependentUpon>DoctorModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Patient.cs">
@@ -272,21 +272,21 @@
     <Content Include="Views\Hospitals\Details.cshtml" />
     <Content Include="Views\Hospitals\Edit.cshtml" />
     <Content Include="Views\Hospitals\Index.cshtml" />
-    <Content Include="Views\Patients\Create.cshtml" />
-    <Content Include="Views\Patients\Delete.cshtml" />
-    <Content Include="Views\Patients\Details.cshtml" />
-    <Content Include="Views\Patients\Edit.cshtml" />
-    <Content Include="Views\Patients\Index.cshtml" />
-    <Content Include="Views\Badanias\Create.cshtml" />
-    <Content Include="Views\Badanias\Delete.cshtml" />
-    <Content Include="Views\Badanias\Details.cshtml" />
-    <Content Include="Views\Badanias\Edit.cshtml" />
-    <Content Include="Views\Badanias\Index.cshtml" />
     <Content Include="Views\Enrollments\Create.cshtml" />
     <Content Include="Views\Enrollments\Delete.cshtml" />
     <Content Include="Views\Enrollments\Details.cshtml" />
     <Content Include="Views\Enrollments\Edit.cshtml" />
     <Content Include="Views\Enrollments\Index.cshtml" />
+    <Content Include="Views\MedicalExaminations\Create.cshtml" />
+    <Content Include="Views\MedicalExaminations\Delete.cshtml" />
+    <Content Include="Views\MedicalExaminations\Details.cshtml" />
+    <Content Include="Views\MedicalExaminations\Edit.cshtml" />
+    <Content Include="Views\MedicalExaminations\Index.cshtml" />
+    <Content Include="Views\Patients\Create.cshtml" />
+    <Content Include="Views\Patients\Delete.cshtml" />
+    <Content Include="Views\Patients\Details.cshtml" />
+    <Content Include="Views\Patients\Edit.cshtml" />
+    <Content Include="Views\Patients\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

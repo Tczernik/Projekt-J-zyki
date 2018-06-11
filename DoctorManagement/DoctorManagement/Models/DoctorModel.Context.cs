@@ -29,7 +29,7 @@ namespace DoctorManagement.Models
         public virtual DbSet<Doctor> Doctor { get; set; }
         public virtual DbSet<Hospital> Hospital { get; set; }
         public virtual DbSet<Patient> Patient { get; set; }
-        public virtual DbSet<Badania> Badania { get; set; }
         public virtual DbSet<Enrollment> Enrollment { get; set; }
+        public virtual DbSet<MedicalExaminations> MedicalExaminations { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace DoctorManagement.Controllers
         // GET: Enrollments
         public ActionResult Index()
         {
-            var enrollment = db.Enrollment.Include(e => e.Patient).Include(e => e.Badania);
+            var enrollment = db.Enrollment.Include(e => e.Patient).Include(e => e.MedicalExaminations);
             return View(enrollment.ToList());
         }
 
@@ -40,7 +40,7 @@ namespace DoctorManagement.Controllers
         public ActionResult Create()
         {
             ViewBag.ID_Patient = new SelectList(db.Patient, "ID", "PatientName");
-            ViewBag.ID_Badania = new SelectList(db.Badania, "Id", "Badania1");
+            ViewBag.ID_MedicalExaminations = new SelectList(db.MedicalExaminations, "Id", "Examinations");
             return View();
         }
 
@@ -49,7 +49,7 @@ namespace DoctorManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,ID_Badania,ID_Patient,Grade")] Enrollment enrollment)
+        public ActionResult Create([Bind(Include = "Id,ID_Patient,Grade,ID_MedicalExaminations")] Enrollment enrollment)
         {
             if (ModelState.IsValid)
             {
@@ -59,7 +59,7 @@ namespace DoctorManagement.Controllers
             }
 
             ViewBag.ID_Patient = new SelectList(db.Patient, "ID", "PatientName", enrollment.ID_Patient);
-            ViewBag.ID_Badania = new SelectList(db.Badania, "Id", "Badania1", enrollment.ID_Badania);
+            ViewBag.ID_MedicalExaminations = new SelectList(db.MedicalExaminations, "Id", "Examinations", enrollment.ID_MedicalExaminations);
             return View(enrollment);
         }
 
@@ -76,7 +76,7 @@ namespace DoctorManagement.Controllers
                 return HttpNotFound();
             }
             ViewBag.ID_Patient = new SelectList(db.Patient, "ID", "PatientName", enrollment.ID_Patient);
-            ViewBag.ID_Badania = new SelectList(db.Badania, "Id", "Badania1", enrollment.ID_Badania);
+            ViewBag.ID_MedicalExaminations = new SelectList(db.MedicalExaminations, "Id", "Examinations", enrollment.ID_MedicalExaminations);
             return View(enrollment);
         }
 
@@ -85,7 +85,7 @@ namespace DoctorManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,ID_Badania,ID_Patient,Grade")] Enrollment enrollment)
+        public ActionResult Edit([Bind(Include = "Id,ID_Patient,Grade,ID_MedicalExaminations")] Enrollment enrollment)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +94,7 @@ namespace DoctorManagement.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.ID_Patient = new SelectList(db.Patient, "ID", "PatientName", enrollment.ID_Patient);
-            ViewBag.ID_Badania = new SelectList(db.Badania, "Id", "Badania1", enrollment.ID_Badania);
+            ViewBag.ID_MedicalExaminations = new SelectList(db.MedicalExaminations, "Id", "Examinations", enrollment.ID_MedicalExaminations);
             return View(enrollment);
         }
 

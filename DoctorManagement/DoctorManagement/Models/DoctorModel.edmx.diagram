@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0fe4436d49d54ba4b83c08804e12f6b4" Name="Diagram1">
+      <Diagram DiagramId="0fe4436d49d54ba4b83c08804e12f6b4" Name="Diagram1" ZoomLevel="114">
         <EntityTypeShape EntityType="DoctorDatabaseModel.BloodGroup" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DoctorDatabaseModel.Doctor" Width="1.5" PointX="3.375" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="DoctorDatabaseModel.Hospital" Width="1.5" PointX="0.75" PointY="2.625" IsExpanded="true" />
@@ -14,12 +14,12 @@
         <AssociationConnector Association="DoctorDatabaseModel.FK__Patient__ID_Doct__37A5467C" ManuallyRouted="false" />
         <AssociationConnector Association="DoctorDatabaseModel.FK__Patient__ID_Bloo__5FB337D6" />
         <AssociationConnector Association="DoctorDatabaseModel.FK__Patient__ID_Hosp__60A75C0F" />
-        <EntityTypeShape EntityType="DoctorDatabaseModel.Badania" Width="1.5" PointX="8" PointY="3.875" />
-        <AssociationConnector Association="DoctorDatabaseModel.FK__Badania__ID_Pati__6FE99F9F" />
         <EntityTypeShape EntityType="DoctorDatabaseModel.Enrollment" Width="1.5" PointX="10.875" PointY="5.125" />
         <AssociationConnector Association="DoctorDatabaseModel.FK__Enrollmen__ID_Pa__76969D2E" />
-        <AssociationConnector Association="DoctorDatabaseModel.FK__Enrollmen__ID_Pa__778AC167" />
-        <AssociationConnector Association="DoctorDatabaseModel.FK__Enrollmen__ID_Ba__75A278F5" />
+        <EntityTypeShape EntityType="DoctorDatabaseModel.MedicalExaminations" Width="1.5" PointX="8.375" PointY="4" />
+        <AssociationConnector Association="DoctorDatabaseModel.FK__Enrollmen__ID_Me__02FC7413" />
+        <AssociationConnector Association="DoctorDatabaseModel.FK__MedicalEx__ID_Pa__04E4BC85" />
+        <AssociationConnector Association="DoctorDatabaseModel.FK__Patient__ID_Hosp__03F0984C" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

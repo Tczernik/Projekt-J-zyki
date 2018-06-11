@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DoctorManagement.Models.Badania>
+﻿@model IEnumerable<DoctorManagement.Models.MedicalExaminations>
 
 @{
     ViewBag.Title = "Index";
@@ -12,7 +12,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Badania1)
+            @Html.DisplayNameFor(model => model.Examinations)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Patient.PatientName)
@@ -23,7 +23,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Badania1)
+            @Html.DisplayFor(modelItem => item.Examinations)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Patient.PatientName)
