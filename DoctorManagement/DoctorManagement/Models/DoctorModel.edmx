@@ -156,12 +156,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Patient__ID_Hosp__03F0984C">
-          <End Role="MedicalExaminations" Type="Self.MedicalExaminations" Multiplicity="0..1" />
+        <Association Name="FK__Patient__ID_Hosp__14270015">
+          <End Role="Hospital" Type="Self.Hospital" Multiplicity="0..1" />
           <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="MedicalExaminations">
-              <PropertyRef Name="Id" />
+            <Principal Role="Hospital">
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Patient">
               <PropertyRef Name="ID_Hospital" />
@@ -203,8 +203,8 @@
             <End Role="Doctor" EntitySet="Doctor" />
             <End Role="Patient" EntitySet="Patient" />
           </AssociationSet>
-          <AssociationSet Name="FK__Patient__ID_Hosp__03F0984C" Association="Self.FK__Patient__ID_Hosp__03F0984C">
-            <End Role="MedicalExaminations" EntitySet="MedicalExaminations" />
+          <AssociationSet Name="FK__Patient__ID_Hosp__14270015" Association="Self.FK__Patient__ID_Hosp__14270015">
+            <End Role="Hospital" EntitySet="Hospital" />
             <End Role="Patient" EntitySet="Patient" />
           </AssociationSet>
         </EntityContainer>
@@ -231,7 +231,7 @@
           <Property Name="Speciality" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ID_Hospital" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Hospital" Relationship="Self.FK__Doctor__ID_Hospi__36B12243" FromRole="Doctor" ToRole="Hospital" />
-          <NavigationProperty Name="Patient" Relationship="Self.FK__Patient__ID_Doct__37A5467C" FromRole="Doctor" ToRole="Patient" />
+          <NavigationProperty Name="Patient" Relationship="DoctorDatabaseModel.FK__Patient__ID_Doct__37A5467C" FromRole="Doctor" ToRole="Patient" />
         </EntityType>
         <EntityType Name="Hospital">
           <Key>
@@ -244,25 +244,7 @@
           <Property Name="Nation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="BloodGroup" Relationship="Self.FK__BloodGrou__ID_Ho__3A81B327" FromRole="Hospital" ToRole="BloodGroup" />
           <NavigationProperty Name="Doctor" Relationship="Self.FK__Doctor__ID_Hospi__36B12243" FromRole="Hospital" ToRole="Doctor" />
-          <NavigationProperty Name="Patient" Relationship="DoctorDatabaseModel.FK__Patient__ID_Hosp__60A75C0F" FromRole="Hospital" ToRole="Patient" />
-        </EntityType>
-        <EntityType Name="Patient">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PatientName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PatientSurname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="SSN" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ID_Doctor" Type="Int32" />
-          <Property Name="ID_Blood" Type="Int32" />
-          <Property Name="ID_Hospital" Type="Int32" />
-          <NavigationProperty Name="Doctor" Relationship="Self.FK__Patient__ID_Doct__37A5467C" FromRole="Patient" ToRole="Doctor" />
-          <NavigationProperty Name="BloodGroup" Relationship="DoctorDatabaseModel.FK__Patient__ID_Bloo__5FB337D6" FromRole="Patient" ToRole="BloodGroup" />
-          <NavigationProperty Name="Hospital" Relationship="DoctorDatabaseModel.FK__Patient__ID_Hosp__60A75C0F" FromRole="Patient" ToRole="Hospital" />
-          <NavigationProperty Name="Enrollment" Relationship="DoctorDatabaseModel.FK__Enrollmen__ID_Pa__76969D2E" FromRole="Patient" ToRole="Enrollment" />
-          <NavigationProperty Name="MedicalExaminations" Relationship="DoctorDatabaseModel.FK__MedicalEx__ID_Pa__04E4BC85" FromRole="Patient" ToRole="MedicalExaminations" />
+          <NavigationProperty Name="Patient" Relationship="DoctorDatabaseModel.FK__Patient__ID_Hosp__14270015" FromRole="Hospital" ToRole="Patient" />
         </EntityType>
         <Association Name="FK__BloodGrou__ID_Ho__3A81B327">
           <End Role="Hospital" Type="Self.Hospital" Multiplicity="1">
@@ -292,25 +274,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Patient__ID_Doct__37A5467C">
-          <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Doctor">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Patient">
-              <PropertyRef Name="ID_Doctor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="DoctorDatabaseEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="BloodGroup" EntityType="Self.BloodGroup" />
           <EntitySet Name="Doctor" EntityType="Self.Doctor" />
           <EntitySet Name="Hospital" EntityType="Self.Hospital" />
-          <EntitySet Name="Patient" EntityType="Self.Patient" />
           <AssociationSet Name="FK__BloodGrou__ID_Ho__3A81B327" Association="Self.FK__BloodGrou__ID_Ho__3A81B327">
             <End Role="Hospital" EntitySet="Hospital" />
             <End Role="BloodGroup" EntitySet="BloodGroup" />
@@ -319,61 +286,34 @@
             <End Role="Hospital" EntitySet="Hospital" />
             <End Role="Doctor" EntitySet="Doctor" />
           </AssociationSet>
-          <AssociationSet Name="FK__Patient__ID_Doct__37A5467C" Association="Self.FK__Patient__ID_Doct__37A5467C">
-            <End Role="Doctor" EntitySet="Doctor" />
-            <End Role="Patient" EntitySet="Patient" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Patient__ID_Bloo__5FB337D6" Association="DoctorDatabaseModel.FK__Patient__ID_Bloo__5FB337D6">
-            <End Role="BloodGroup" EntitySet="BloodGroup" />
-            <End Role="Patient" EntitySet="Patient" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Patient__ID_Hosp__60A75C0F" Association="DoctorDatabaseModel.FK__Patient__ID_Hosp__60A75C0F">
-            <End Role="Hospital" EntitySet="Hospital" />
-            <End Role="Patient" EntitySet="Patient" />
-          </AssociationSet>
           <EntitySet Name="Enrollment" EntityType="DoctorDatabaseModel.Enrollment" />
-          <AssociationSet Name="FK__Enrollmen__ID_Pa__76969D2E" Association="DoctorDatabaseModel.FK__Enrollmen__ID_Pa__76969D2E">
-            <End Role="Patient" EntitySet="Patient" />
-            <End Role="Enrollment" EntitySet="Enrollment" />
-          </AssociationSet>
           <EntitySet Name="MedicalExaminations" EntityType="DoctorDatabaseModel.MedicalExaminations" />
           <AssociationSet Name="FK__Enrollmen__ID_Me__02FC7413" Association="DoctorDatabaseModel.FK__Enrollmen__ID_Me__02FC7413">
             <End Role="MedicalExaminations" EntitySet="MedicalExaminations" />
             <End Role="Enrollment" EntitySet="Enrollment" />
           </AssociationSet>
+          <EntitySet Name="Patient" EntityType="DoctorDatabaseModel.Patient" />
+          <AssociationSet Name="FK__Patient__ID_Bloo__5FB337D6" Association="DoctorDatabaseModel.FK__Patient__ID_Bloo__5FB337D6">
+            <End Role="BloodGroup" EntitySet="BloodGroup" />
+            <End Role="Patient" EntitySet="Patient" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Patient__ID_Doct__37A5467C" Association="DoctorDatabaseModel.FK__Patient__ID_Doct__37A5467C">
+            <End Role="Doctor" EntitySet="Doctor" />
+            <End Role="Patient" EntitySet="Patient" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Enrollmen__ID_Pa__787EE5A0" Association="DoctorDatabaseModel.FK__Enrollmen__ID_Pa__787EE5A0">
+            <End Role="Patient" EntitySet="Patient" />
+            <End Role="Enrollment" EntitySet="Enrollment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Patient__ID_Hosp__14270015" Association="DoctorDatabaseModel.FK__Patient__ID_Hosp__14270015">
+            <End Role="Hospital" EntitySet="Hospital" />
+            <End Role="Patient" EntitySet="Patient" />
+          </AssociationSet>
           <AssociationSet Name="FK__MedicalEx__ID_Pa__04E4BC85" Association="DoctorDatabaseModel.FK__MedicalEx__ID_Pa__04E4BC85">
             <End Role="Patient" EntitySet="Patient" />
             <End Role="MedicalExaminations" EntitySet="MedicalExaminations" />
           </AssociationSet>
-          <AssociationSet Name="FK__Patient__ID_Hosp__03F0984C" Association="DoctorDatabaseModel.FK__Patient__ID_Hosp__03F0984C">
-            <End Role="MedicalExaminations" EntitySet="MedicalExaminations" />
-            <End Role="Patient" EntitySet="Patient" />
-          </AssociationSet>
-        </EntityContainer>
-        <Association Name="FK__Patient__ID_Bloo__5FB337D6">
-          <End Type="DoctorDatabaseModel.BloodGroup" Role="BloodGroup" Multiplicity="0..1" />
-          <End Type="DoctorDatabaseModel.Patient" Role="Patient" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BloodGroup">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Patient">
-              <PropertyRef Name="ID_Blood" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Patient__ID_Hosp__60A75C0F">
-          <End Type="DoctorDatabaseModel.Hospital" Role="Hospital" Multiplicity="0..1" />
-          <End Type="DoctorDatabaseModel.Patient" Role="Patient" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Hospital">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Patient">
-              <PropertyRef Name="ID_Hospital" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+          </EntityContainer>
         <EntityType Name="Enrollment">
           <Key>
             <PropertyRef Name="Id" />
@@ -381,22 +321,10 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ID_Patient" Type="Int32" />
           <Property Name="Grade" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Patient" Relationship="DoctorDatabaseModel.FK__Enrollmen__ID_Pa__76969D2E" FromRole="Enrollment" ToRole="Patient" />
           <Property Name="ID_MedicalExaminations" Type="Int32" />
           <NavigationProperty Name="MedicalExaminations" Relationship="DoctorDatabaseModel.FK__Enrollmen__ID_Me__02FC7413" FromRole="Enrollment" ToRole="MedicalExaminations" />
+          <NavigationProperty Name="Patient" Relationship="DoctorDatabaseModel.FK__Enrollmen__ID_Pa__787EE5A0" FromRole="Enrollment" ToRole="Patient" />
         </EntityType>
-        <Association Name="FK__Enrollmen__ID_Pa__76969D2E">
-          <End Type="DoctorDatabaseModel.Patient" Role="Patient" Multiplicity="0..1" />
-          <End Type="DoctorDatabaseModel.Enrollment" Role="Enrollment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Patient">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Enrollment">
-              <PropertyRef Name="ID_Patient" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="MedicalExaminations">
           <Key>
             <PropertyRef Name="Id" />
@@ -406,7 +334,6 @@
           <Property Name="ID_Patient" Type="Int32" />
           <NavigationProperty Name="Enrollment" Relationship="DoctorDatabaseModel.FK__Enrollmen__ID_Me__02FC7413" FromRole="MedicalExaminations" ToRole="Enrollment" />
           <NavigationProperty Name="Patient" Relationship="DoctorDatabaseModel.FK__MedicalEx__ID_Pa__04E4BC85" FromRole="MedicalExaminations" ToRole="Patient" />
-          <NavigationProperty Name="Patient1" Relationship="DoctorDatabaseModel.FK__Patient__ID_Hosp__03F0984C" FromRole="MedicalExaminations" ToRole="Patient" />
         </EntityType>
         <Association Name="FK__Enrollmen__ID_Me__02FC7413">
           <End Type="DoctorDatabaseModel.MedicalExaminations" Role="MedicalExaminations" Multiplicity="0..1">
@@ -419,6 +346,74 @@
             </Principal>
             <Dependent Role="Enrollment">
               <PropertyRef Name="ID_MedicalExaminations" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PatientName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PatientSurname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SSN" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ID_Doctor" Type="Int32" />
+          <Property Name="ID_Blood" Type="Int32" />
+          <Property Name="ID_Hospital" Type="Int32" />
+          <NavigationProperty Name="BloodGroup" Relationship="DoctorDatabaseModel.FK__Patient__ID_Bloo__5FB337D6" FromRole="Patient" ToRole="BloodGroup" />
+          <NavigationProperty Name="Doctor" Relationship="DoctorDatabaseModel.FK__Patient__ID_Doct__37A5467C" FromRole="Patient" ToRole="Doctor" />
+          <NavigationProperty Name="Enrollment" Relationship="DoctorDatabaseModel.FK__Enrollmen__ID_Pa__787EE5A0" FromRole="Patient" ToRole="Enrollment" />
+          <NavigationProperty Name="Hospital" Relationship="DoctorDatabaseModel.FK__Patient__ID_Hosp__14270015" FromRole="Patient" ToRole="Hospital" />
+          <NavigationProperty Name="MedicalExaminations" Relationship="DoctorDatabaseModel.FK__MedicalEx__ID_Pa__04E4BC85" FromRole="Patient" ToRole="MedicalExaminations" />
+        </EntityType>
+        <Association Name="FK__Patient__ID_Bloo__5FB337D6">
+          <End Type="DoctorDatabaseModel.BloodGroup" Role="BloodGroup" Multiplicity="0..1" />
+          <End Type="DoctorDatabaseModel.Patient" Role="Patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BloodGroup">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Patient">
+              <PropertyRef Name="ID_Blood" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Patient__ID_Doct__37A5467C">
+          <End Type="DoctorDatabaseModel.Doctor" Role="Doctor" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="DoctorDatabaseModel.Patient" Role="Patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Patient">
+              <PropertyRef Name="ID_Doctor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Enrollmen__ID_Pa__787EE5A0">
+          <End Type="DoctorDatabaseModel.Patient" Role="Patient" Multiplicity="0..1" />
+          <End Type="DoctorDatabaseModel.Enrollment" Role="Enrollment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Enrollment">
+              <PropertyRef Name="ID_Patient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Patient__ID_Hosp__14270015">
+          <End Type="DoctorDatabaseModel.Hospital" Role="Hospital" Multiplicity="0..1" />
+          <End Type="DoctorDatabaseModel.Patient" Role="Patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospital">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Patient">
+              <PropertyRef Name="ID_Hospital" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -436,19 +431,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Patient__ID_Hosp__03F0984C">
-          <End Type="DoctorDatabaseModel.MedicalExaminations" Role="MedicalExaminations" Multiplicity="0..1" />
-          <End Type="DoctorDatabaseModel.Patient" Role="Patient" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MedicalExaminations">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Patient">
-              <PropertyRef Name="ID_Hospital" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -484,20 +467,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Patient">
-            <EntityTypeMapping TypeName="DoctorDatabaseModel.Patient">
-              <MappingFragment StoreEntitySet="Patient">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="PatientName" ColumnName="PatientName" />
-                <ScalarProperty Name="PatientSurname" ColumnName="PatientSurname" />
-                <ScalarProperty Name="SSN" ColumnName="SSN" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="ID_Doctor" ColumnName="ID_Doctor" />
-                <ScalarProperty Name="ID_Blood" ColumnName="ID_Blood" />
-                <ScalarProperty Name="ID_Hospital" ColumnName="ID_Hospital" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Enrollment">
             <EntityTypeMapping TypeName="DoctorDatabaseModel.Enrollment">
               <MappingFragment StoreEntitySet="Enrollment">
@@ -514,6 +483,20 @@
                 <ScalarProperty Name="ID_Patient" ColumnName="ID_Patient" />
                 <ScalarProperty Name="Examinations" ColumnName="Examinations" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Patient">
+            <EntityTypeMapping TypeName="DoctorDatabaseModel.Patient">
+              <MappingFragment StoreEntitySet="Patient">
+                <ScalarProperty Name="ID_Hospital" ColumnName="ID_Hospital" />
+                <ScalarProperty Name="ID_Blood" ColumnName="ID_Blood" />
+                <ScalarProperty Name="ID_Doctor" ColumnName="ID_Doctor" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="SSN" ColumnName="SSN" />
+                <ScalarProperty Name="PatientSurname" ColumnName="PatientSurname" />
+                <ScalarProperty Name="PatientName" ColumnName="PatientName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

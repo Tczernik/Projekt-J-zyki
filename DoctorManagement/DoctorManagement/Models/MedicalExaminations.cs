@@ -18,7 +18,6 @@ namespace DoctorManagement.Models
         public MedicalExaminations()
         {
             this.Enrollment = new HashSet<Enrollment>();
-            this.Patient1 = new HashSet<Patient>();
         }
     
         public int Id { get; set; }
@@ -28,7 +27,5 @@ namespace DoctorManagement.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Enrollment> Enrollment { get; set; }
         public virtual Patient Patient { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Patient> Patient1 { get; set; }
     }
 }

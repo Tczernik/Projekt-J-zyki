@@ -48,16 +48,25 @@ namespace DoctorManagement.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,DoctorName,Speciality,ID_Hospital")] Doctor doctor)
+        public ActionResult Create([Bind(Include = "DoctorName,Speciality,ID_Hospital")] Doctor doctor)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Doctor.Add(doctor);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
 
-            ViewBag.ID_Hospital = new SelectList(db.Hospital, "ID", "HospitalName", doctor.ID_Hospital);
+                if (ModelState.IsValid)
+                {
+                    db.Doctor.Add(doctor);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (DataException)
+            {
+                ModelState.AddModelError("", "Unable to save changes.");
+            }
+            
+
+         
             return View(doctor);
         }
 
@@ -84,22 +93,34 @@ namespace DoctorManagement.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,DoctorName,Speciality,ID_Hospital")] Doctor doctor)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(doctor).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(doctor).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
-            ViewBag.ID_Hospital = new SelectList(db.Hospital, "ID", "HospitalName", doctor.ID_Hospital);
+            catch(DataException)
+            {
+                ModelState.AddModelError("","Unable to save changes.");
+            }
+            
+            
             return View(doctor);
         }
 
         // GET: Doctors/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id, bool? saveChangesError = false)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            if (saveChangesError.GetValueOrDefault())
+            {
+                ViewBag.ErrorMessage = "Delete failed. Try again.";
             }
             Doctor doctor = db.Doctor.Find(id);
             if (doctor == null)
@@ -114,9 +135,16 @@ namespace DoctorManagement.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Doctor doctor = db.Doctor.Find(id);
-            db.Doctor.Remove(doctor);
-            db.SaveChanges();
+            try
+            {
+                Doctor doctor = db.Doctor.Find(id);
+                db.Doctor.Remove(doctor);
+                db.SaveChanges();
+            }
+            catch(DataException)
+            {
+                return RedirectToAction("Delete", new { id, saveChagesError = true });
+            }
             return RedirectToAction("Index");
         }
 
