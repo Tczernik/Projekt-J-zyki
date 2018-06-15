@@ -15,11 +15,31 @@ namespace DoctorManagement.Controllers
         private DoctorDatabaseEntities db = new DoctorDatabaseEntities();
 
         // GET: Patients
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
-            var patient = db.Patient.Include(p => p.Doctor).Include(p => p.BloodGroup).Include(p => p.Hospital);
-            return View(patient.ToList());
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+            var patients = from s in db.Patient
+                           select s;
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    patients = patients.OrderByDescending(s => s.PatientName);
+                    break;
+                case "Date":
+                    patients = patients.OrderByDescending(s => s.Date);
+                    break;
+                default:
+                    patients = patients.OrderBy(s => s.PatientName);
+                    break;
+                
+            }
+            return View(patients.ToList());
         }
+        
+            
+           
+        
 
         // GET: Patients/Details/5
         public ActionResult Details(int? id)
