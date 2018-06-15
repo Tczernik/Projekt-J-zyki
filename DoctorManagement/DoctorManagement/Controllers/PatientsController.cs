@@ -15,12 +15,16 @@ namespace DoctorManagement.Controllers
         private DoctorDatabaseEntities db = new DoctorDatabaseEntities();
 
         // GET: Patients
-        public ActionResult Index(string sortOrder)
+        public ActionResult Index(string sortOrder, string searchString)
         {
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
             var patients = from s in db.Patient
                            select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                patients = patients.Where(s => s.PatientName.Contains(searchString) || s.PatientSurname.Contains(searchString));
+            }
             switch (sortOrder)
             {
                 case "name_desc":
