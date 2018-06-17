@@ -1,35 +1,38 @@
-﻿@model IEnumerable<DoctorManagement.Models.Doctor>
+﻿@model PagedList.IPagedList<DoctorManagement.Models.Doctor>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Doctors";
 }
 
-<h2>Index</h2>
+<h2>Doctors</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-@using (Html.BeginForm())
+@using (Html.BeginForm("Index", "Doctors", FormMethod.Get))
 {
-    <p>
-        Find by DoctorName: @Html.TextBox("SearchString")
+    <th>
+        Find by DoctorName: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
         <input type="submit" value="Search" />
-    </p>
-    <p>
-        Find by Speciality: @Html.TextBox("SearchString1")
+    </th>
+    <th>
+        Find by Speciality: @Html.TextBox("SearchString1", ViewBag.CurrentFilter as string)
         <input type="submit" value="Search" />
-    </p>
+    </th>
+
 }
 <table class="table">
     <tr>
         <th>
-            @Html.ActionLink("DoctorName", "Index", new { sortOrder = ViewBag.NameSortParm })
+            @Html.ActionLink("DoctorName", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Speciality)
+            @Html.DisplayName("Speciality")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Hospital.HospitalName)
+            @Html.DisplayName("HospitalName")
         </th>
         <th></th>
     </tr>
@@ -55,3 +58,7 @@
     }
 
 </table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DoctorManagement.Models;
+using PagedList;
 
 namespace DoctorManagement.Controllers
 {
@@ -15,10 +16,42 @@ namespace DoctorManagement.Controllers
         private DoctorDatabaseEntities db = new DoctorDatabaseEntities();
 
         // GET: MedicalExaminations
-        public ActionResult Index()
+        public ViewResult Index( string searchString, string sortOrder,string currentFilter, int? page)
         {
-            var medicalExaminations = db.MedicalExaminations.Include(m => m.Patient);
-            return View(medicalExaminations.ToList());
+            ViewBag.CurrentFilterSort = sortOrder;
+            ViewBag.ExaminationsSortParm = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewBag.CurrentFilter = searchString;
+
+
+            var medicalexaminations = from s in db.MedicalExaminations
+                                      select s;
+           
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                medicalexaminations = medicalexaminations.Where(s => s.Examinations.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    medicalexaminations = medicalexaminations.OrderByDescending(s => s.Examinations);
+                    break;
+                default:
+                    medicalexaminations = medicalexaminations.OrderBy(s => s.Examinations);
+                    break;
+
+            }
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+            return View(medicalexaminations.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: MedicalExaminations/Details/5
