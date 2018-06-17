@@ -23,9 +23,7 @@
         <th>
             @Html.ActionLink("Examinations", "Index", new { sortOrder = ViewBag.ExaminationsSortParm, currentFilter = ViewBag.currentFilter })
         </th>
-        <th>
-            @Html.DisplayName("PatientName")
-        </th>
+       
         <th></th>
     </tr>
 
@@ -35,9 +33,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Examinations)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Patient.PatientName)
-            </td>
+          
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                 @Html.ActionLink("Details", "Details", new { id = item.Id }) |
