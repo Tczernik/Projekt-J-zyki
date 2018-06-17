@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DoctorManagement.Models;
+using DoctorManagement.ViewModel;
+
 
 namespace DoctorManagement.Controllers
 {
     public class HomeController : Controller
     {
+
+        private DoctorDatabaseEntities db = new DoctorDatabaseEntities();
+
         public ActionResult Index()
         {
             return View();
@@ -15,16 +21,21 @@ namespace DoctorManagement.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            IQueryable<StatisticDateGroup> data =
+                from patient in db.Patient
+                group patient by patient.Date into dateGroup
+                select new StatisticDateGroup()
+                {
+                    Date = dateGroup.Key,
+                    PatientCount = dateGroup.Count()
+                };
+            return View(data.ToList());
         }
 
-        public ActionResult Contact()
+        protected override void Dispose(bool disposing)
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            db.Dispose();
+            base.Dispose(disposing);
         }
     }
 }
