@@ -11,7 +11,9 @@ namespace DoctorManagement.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
+
     public partial class Doctor
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,7 +23,9 @@ namespace DoctorManagement.Models
         }
     
         public int ID { get; set; }
+        [StringLength(50, ErrorMessage = "Doctor name cannot be longer than 50 characters")]
         public string DoctorName { get; set; }
+        [StringLength(50, ErrorMessage = "Speciality cannot be longer than 50 characters")]
         public string Speciality { get; set; }
         public int ID_Hospital { get; set; }
     

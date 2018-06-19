@@ -11,7 +11,8 @@ namespace DoctorManagement.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Hospital
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,10 +24,16 @@ namespace DoctorManagement.Models
         }
     
         public int ID { get; set; }
+        [StringLength(50, ErrorMessage = "Name of hospital cannot be longer than 50 characters")]
         public string HospitalName { get; set; }
+        [StringLength(50, ErrorMessage = "Adress cannot be longer than 50 characters")]
         public string Adress { get; set; }
+        [StringLength(9, ErrorMessage = "Phone number must be 9 characters")]
+        [MinLength(9, ErrorMessage = "Phone number must be 9 characters")]
         public string PhoneNumber { get; set; }
+        [StringLength(50, ErrorMessage = "Name of nation cannot be longer than 50 characters")]
         public string Nation { get; set; }
+
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BloodGroup> BloodGroup { get; set; }

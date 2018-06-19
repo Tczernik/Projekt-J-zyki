@@ -11,7 +11,9 @@ namespace DoctorManagement.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
+
     public partial class BloodGroup
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,6 +23,7 @@ namespace DoctorManagement.Models
         }
     
         public int ID { get; set; }
+        [StringLength(5, ErrorMessage = "Name of blood group cannot be longer than 5 characters")]
         public string BloodName { get; set; }
         public int ID_Hospital { get; set; }
     

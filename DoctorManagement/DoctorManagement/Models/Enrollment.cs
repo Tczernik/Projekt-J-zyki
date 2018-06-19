@@ -11,11 +11,14 @@ namespace DoctorManagement.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
+
     public partial class Enrollment
     {
         public int Id { get; set; }
         public Nullable<int> ID_Patient { get; set; }
+        [StringLength(50, ErrorMessage = "Grade cannot be longer than 50 characters")]
         public string Grade { get; set; }
         public Nullable<int> ID_MedicalExaminations { get; set; }
     

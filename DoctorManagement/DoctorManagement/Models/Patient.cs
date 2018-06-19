@@ -11,6 +11,7 @@ namespace DoctorManagement.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class Patient
     {
@@ -20,11 +21,17 @@ namespace DoctorManagement.Models
             this.Enrollment = new HashSet<Enrollment>();
             this.MedicalExaminations = new HashSet<MedicalExaminations>();
         }
-    
+        
         public int ID { get; set; }
+        [StringLength(50, ErrorMessage = "Name cannot be longer than 50 characters")]
         public string PatientName { get; set; }
+        [StringLength(50, ErrorMessage = "Surname cannot be longer than 50 characters")]
         public string PatientSurname { get; set; }
+        [StringLength(11, ErrorMessage = "Personal number must be 11 characters")]
+        [MinLength(11, ErrorMessage = "Personal number must be 11 characters")]
         public string SSN { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public System.DateTime Date { get; set; }
         public Nullable<int> ID_Doctor { get; set; }
         public Nullable<int> ID_Blood { get; set; }

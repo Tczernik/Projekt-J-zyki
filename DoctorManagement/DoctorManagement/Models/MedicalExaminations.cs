@@ -11,7 +11,8 @@ namespace DoctorManagement.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class MedicalExaminations
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,6 +23,7 @@ namespace DoctorManagement.Models
     
         public int Id { get; set; }
         public string Examinations { get; set; }
+        [StringLength(50, ErrorMessage = "Name of Examinations cannot be longer than 50 characters")]
         public Nullable<int> ID_Patient { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
