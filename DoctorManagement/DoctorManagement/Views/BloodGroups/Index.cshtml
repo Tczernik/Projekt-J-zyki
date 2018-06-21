@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<DoctorManagement.Models.BloodGroup>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Blood Group";
 }
 
-<h2>Index</h2>
+<h2>BloodGroup</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -27,7 +27,7 @@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
             @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Delte", "Delete", new { id=item.ID })
         </td>
     </tr>
 }
